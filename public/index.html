@@ -7,7 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    <div></div>
+    <div id="left">
+        <h1>Adicionar novo livro</h1>
+        <input type="text" id="titulo" placeholder="Titulo" maxlength="50">
+        <input type="text" id="autor" placeholder="Autor" maxlength="50">
+        <input type="number" id="pagTotal" placeholder="Total de páginas" min="0" max="5000">
+        <h4 id="alerta"></h4>
+        <button onclick="">Enviar</button>
+    </div>
+    <div id="right">
+        <h1>Livros adicionados</h1>
+        <ol id="lista"></ol>
+    </div>
 </body>
 <script src="script.js"></script>
 </html>
