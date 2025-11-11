@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    /* background-color: #f0f0f0; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#main{
+    background-color: aliceblue;
+    display: flex;
+    height: 800px;
+    width: 1000px;
+    align-items: center;
+    justify-content: center;
+}
+
+.lados{
+    height: 100%;
+    width: 50%;
+}
