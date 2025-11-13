@@ -28,6 +28,18 @@ app.get("/livros", (req, res) => {
   });
 });
 
+// POST /livros → insere um novo livro no banco
+app.post("/livros", (req, res) => {
+  const { titulo, autor, paginas_total } = req.body; // Extrai os dados enviados pelo front
+  db.query(
+    "INSERT INTO livros (titulo, autor, paginas_total) VALUES (?, ?, ?)", // Query SQL com placeholders
+    [titulo, autor, paginas_total], // Valores que substituem os "?"
+    (err, result) => {
+      if (err) throw err;
+      res.json({ message: "Livro adicionado com sucesso!" }); // Retorno de sucesso
+    });
+});
+
 // Inicia o servidor na porta 3000
 app.listen(3000, () =>
   console.log("Servidor rodando em http://localhost:3000")
