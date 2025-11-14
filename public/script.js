@@ -23,9 +23,11 @@ async function carregarLivros(){
     li2.style.marginLeft = '15px';
     li2.style.marginTop = '5px';
     ul.appendChild(li2);
-    // const li3 = document.createElement("li");
-    // li3.textContent = `Total de páginas: ${u.paginas_total}`;
-    // ul.appendChild(li3);
+    const li3 = document.createElement("li");
+    li3.textContent = `Id: ${u.id}`;
+    ul.appendChild(li3);
+    li3.style.marginLeft = '15px';
+    li3.style.marginTop = '5px';
   });
 };
 
