@@ -28,6 +28,14 @@ app.get("/livros", (req, res) => {
   });
 });
 
+app.get("/notas", (req, res) => {
+  db.query("SELECT * FROM notas", (err, results) => {
+    if (err) throw err; 
+    res.json(results); 
+  });
+});
+
+
 // POST /livros → insere um novo livro no banco
 app.post("/livros", (req, res) => {
   const { titulo, autor, paginas_total } = req.body; // Extrai os dados enviados pelo front

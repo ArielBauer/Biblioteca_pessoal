@@ -13,16 +13,28 @@ body{
 
 #main{
     background-color: aliceblue;
-    display: flex;
+    /* display: flex; */
     height: 800px;
     width: 1000px;
+    /* align-items: center;
+    justify-content: center; */
+}
+
+#cima{
+    height: 50%;
+    width: 100%;
+    display: flex;
+}
+.lados{
+    width: 50%;
     align-items: center;
     justify-content: center;
 }
 
-.lados{
-    height: 100%;
-    width: 50%;
+#baixo{
+    height: 50%;
+    width: 100%;
     align-items: center;
     justify-content: center;
+    background-color: azure;
 }

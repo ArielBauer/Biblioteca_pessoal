@@ -2,7 +2,7 @@ const form = document.getElementById("form");
 let lista = document.getElementById("lista");
 
 // Função para carregar livros
-async function carregarLivros() {
+async function carregarLivros(){
   const resposta = await fetch("/livros");
   const livros = await resposta.json();
   console.log(livros);
@@ -12,19 +12,27 @@ async function carregarLivros() {
   livros.forEach((u) => {
     const li = document.createElement("li");
     li.textContent = u.titulo;
+    li.style.marginTop = '15px';
     lista.appendChild(li);
-
     
-    // const ul = document.createElement("ul");
-    // ul.textContent = " "
-    // li.appendChild(ul);
-    // const li2 = document.createElement("li");
-    // li2.textContent = `Autor(a): ${u.autor}`;
-    // ul.appendChild(li2);
+    const ul = document.createElement("ul");
+    ul.textContent = " "
+    li.appendChild(ul);
+    const li2 = document.createElement("li");
+    li2.textContent = `Autor(a): ${u.autor}`;
+    li2.style.marginLeft = '15px';
+    li2.style.marginTop = '5px';
+    ul.appendChild(li2);
     // const li3 = document.createElement("li");
     // li3.textContent = `Total de páginas: ${u.paginas_total}`;
     // ul.appendChild(li3);
-  });;
+  });
+};
+
+async function carregaNotas(){
+  const resposta = await fetch("/notas");
+  const notas = await resposta.json();
+  console.log(notas);
 };
 
 
@@ -44,22 +52,8 @@ form.addEventListener("submit", async (e) => {
 
   form.reset(); // limpa os campos com a função nativa para tags form
   carregarLivros(); // atualiza lista
-
-// let teste=document.getElementById("teste");
-// teste.textContent=`${titulo}, ${autor}, ${paginas_total}`
-
 });
-
-/* Um estudo em vermelho Sherlock Homes
-Árthur Conan Doyle
-176 
-
-Desaventuras em série: O Mau Começo
-Daniel Handler
-152
-
-
-*/
 
 // Carrega ao abrir a página
 carregarLivros();
+carregaNotas();
