@@ -48,6 +48,18 @@ app.post("/livros", (req, res) => {
     });
 });
 
+app.post("/notas", (req, res) => {
+  const { nota, avaliacao } = req.body;
+  db.query(
+    "INSERT INTO notas (nota, avaliacao) VALUES (?, ?)",
+    [nota, avaliacao],
+  (err, result) => {
+    if(err) throw err;
+    res.json({ message: "Nota adicionada com sucesso!"});
+  });
+});
+
+
 // Inicia o servidor na porta 3000
 app.listen(3000, () =>
   console.log("Servidor rodando em http://localhost:3000")

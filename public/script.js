@@ -1,4 +1,5 @@
 const form = document.getElementById("form");
+const div = document.getElementById("baixo");
 let lista = document.getElementById("lista");
 
 // Função para carregar livros
@@ -29,14 +30,38 @@ async function carregarLivros(){
     li3.style.marginLeft = '15px';
     li3.style.marginTop = '5px';
   });
+  
+  let idLivro = document.getElementById("idLivro").value;
+  let nomeLivro = document.getElementById("nomeLivro");
+  function procuraLivro(){
+    for(let i = 0; i < livros.length; i++){
+      if(livros[i].id == idLivro){
+        nomeLivro.innerHTML = livros[i].titulo;
+        i=livros.length;
+      }};
+  };
+  procuraLivro();
 };
+
 
 async function carregaNotas(){
   const resposta = await fetch("/notas");
   const notas = await resposta.json();
   console.log(notas);
+
+  let p = document.getElementById("p");
+  let idLivro = document.getElementById("idLivro").value;
+
+  for(let i = 0; i < notas.length; i++){
+    if(notas[i].livroFK == idLivro){
+      p.innerHTML = `${notas[i].nota}, ${notas[i].avaliacao}`;
+      id=notas.length;
+    }else{p.innerHTML=' '};
+  };
 };
 
+let nota = document.getElementById("nota").value;
+let aval = document.getElementById("avaliacao").value;
 
 // Função para enviar novo livro
 form.addEventListener("submit", async (e) => {
@@ -56,6 +81,9 @@ form.addEventListener("submit", async (e) => {
   carregarLivros(); // atualiza lista
 });
 
+
+
+
 // Carrega ao abrir a página
 carregarLivros();
-carregaNotas();
+// carregaNotas();
