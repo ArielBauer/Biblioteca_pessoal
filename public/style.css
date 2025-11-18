@@ -32,9 +32,12 @@ body{
 }
 
 #baixo{
+    background-color: azure;
     height: 50%;
     width: 100%;
-    align-items: center;
-    justify-content: center;
+    display: flex;
+}
+
+.baixos{
     background-color: azure;
 }

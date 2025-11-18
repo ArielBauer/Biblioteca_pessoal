@@ -20,7 +20,7 @@ const db = mysql.createConnection({
 
 // ---------- ROTAS ----------
 
-// GET /usuarios → retorna todos os usuários do banco
+// GET /livros → retorna todos os livros do banco
 app.get("/livros", (req, res) => {
   db.query("SELECT * FROM livros", (err, results) => {
     if (err) throw err; // Se der erro na query, interrompe
@@ -28,6 +28,7 @@ app.get("/livros", (req, res) => {
   });
 });
 
+// GET /notas → retorna todas as notas do banco
 app.get("/notas", (req, res) => {
   db.query("SELECT * FROM notas", (err, results) => {
     if (err) throw err; 
@@ -48,11 +49,12 @@ app.post("/livros", (req, res) => {
     });
 });
 
+// POST /notas → insere uma nova nota no banco
 app.post("/notas", (req, res) => {
-  const { nota, avaliacao } = req.body;
+  const { livroFK, nota, avaliacao } = req.body;
   db.query(
-    "INSERT INTO notas (nota, avaliacao) VALUES (?, ?)",
-    [nota, avaliacao],
+    "INSERT INTO notas ( livroFK, nota, avaliacao) VALUES (?, ?, ?)",
+    [livroFK, nota, avaliacao],
   (err, result) => {
     if(err) throw err;
     res.json({ message: "Nota adicionada com sucesso!"});

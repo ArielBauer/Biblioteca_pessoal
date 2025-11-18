@@ -1,6 +1,7 @@
 const form = document.getElementById("form");
-const div = document.getElementById("baixo");
+const div = document.getElementById("botaoNota");
 let lista = document.getElementById("lista");
+// let livroNome
 
 // Função para carregar livros
 async function carregarLivros(){
@@ -8,7 +9,7 @@ async function carregarLivros(){
   const livros = await resposta.json();
   console.log(livros);
 
-  lista.innerHTML = ""; // Limpa a lista
+  lista.innerHTML = ' '; // Limpa a lista
   //Adiciona livros já cadastrados a lista
   livros.forEach((u) => {
     const li = document.createElement("li");
@@ -17,6 +18,7 @@ async function carregarLivros(){
     lista.appendChild(li);
     
     const ul = document.createElement("ul");
+    ul.id = "ul"
     ul.textContent = " "
     li.appendChild(ul);
     const li2 = document.createElement("li");
@@ -31,12 +33,13 @@ async function carregarLivros(){
     li3.style.marginTop = '5px';
   });
   
-  let idLivro = document.getElementById("idLivro").value;
+  let idLivro = document.getElementById("livroFK").value;
   let nomeLivro = document.getElementById("nomeLivro");
   function procuraLivro(){
     for(let i = 0; i < livros.length; i++){
       if(livros[i].id == idLivro){
         nomeLivro.innerHTML = livros[i].titulo;
+        // livroNome = livros[i].titulo;
         i=livros.length;
       }};
   };
@@ -44,24 +47,51 @@ async function carregarLivros(){
 };
 
 
-async function carregaNotas(){
+async function carregarNotas(){
   const resposta = await fetch("/notas");
   const notas = await resposta.json();
   console.log(notas);
 
   let p = document.getElementById("p");
-  let idLivro = document.getElementById("idLivro").value;
+  let idLivro = document.getElementById("livroFK").value;
 
   for(let i = 0; i < notas.length; i++){
     if(notas[i].livroFK == idLivro){
-      p.innerHTML = `${notas[i].nota}, ${notas[i].avaliacao}`;
-      id=notas.length;
+      p.innerHTML = `${livroNome}, ${notas[i].nota}, ${notas[i].avaliacao}`;
+      i=notas.length;
     }else{p.innerHTML=' '};
   };
+
+  let lista = document.getElementById("listaNotas");
+  lista.innerHTML = ' '; // Limpa a lista
+
+  // Adiciona notas já cadastradas a lista
+  notas.forEach((u) => {
+    const li = document.createElement("li");
+    li.textContent = `Id do livro: ${u.livroFK}`
+    li.style.marginTop = '15px';
+    lista.appendChild(li);
+
+    const ul = document.createElement("ul");
+    ul.id = "ul"
+    ul.textContent = " "
+    li.appendChild(ul);
+    const li2 = document.createElement("li");
+    li2.textContent = `Nota: ${u.nota}`
+    li2.style.marginLeft = '15px';
+    li2.style.marginTop = '5px';
+    ul.appendChild(li2);
+    if(u.avaliacao == null){
+    }else{
+      const li3 = document.createElement("li");
+      li3.textContent = `Avaliação escrita: ${u.avaliacao}`
+      ul.appendChild(li3);
+      li3.style.marginLeft = '15px';
+      li3.style.marginTop = '5px';
+    };
+  });
 };
 
-let nota = document.getElementById("nota").value;
-let aval = document.getElementById("avaliacao").value;
 
 // Função para enviar novo livro
 form.addEventListener("submit", async (e) => {
@@ -81,9 +111,24 @@ form.addEventListener("submit", async (e) => {
   carregarLivros(); // atualiza lista
 });
 
+div.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const livroFK = document.getElementById("livroFK").value;
+  const nota = document.getElementById("nota").value;
+  const avaliacao = document.getElementById("avaliacao").value;
+  console.log(livroFK, nota, avaliacao)
 
+  await fetch("/notas", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ livroFK, nota, avaliacao }),
+  });
+
+  div.reset();
+  carregarNotas();
+});
 
 
 // Carrega ao abrir a página
 carregarLivros();
-// carregaNotas();
+carregarNotas();
