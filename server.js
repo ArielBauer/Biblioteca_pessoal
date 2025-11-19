@@ -62,6 +62,34 @@ app.post("/notas", (req, res) => {
 });
 
 
+// DELETE /livros → deleta um livro do banco de dados
+app.delete("/livros/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.query("DELETE FROM livros WHERE id = ?",
+    [id],
+  (err, result) => {
+    if(err){
+      console.log(err);
+    }
+    res.status(200).json({ mensagem: "Livro deletado" });
+  });
+});
+
+app.delete("/notas/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.query("DELETE FROM notas WHERE id = ?",
+    [id],
+  (err, result) => {
+    if(err){
+      console.log(err);
+    }
+    res.status(200).json({ mensagem: "Nota deletada"})
+  });
+});
+
+
 // Inicia o servidor na porta 3000
 app.listen(3000, () =>
   console.log("Servidor rodando em http://localhost:3000")
